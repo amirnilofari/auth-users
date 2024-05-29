@@ -1,25 +1,35 @@
 package repository
 
 import (
+	"database/sql"
 	"errors"
 
 	"github.com/amirnilofari/auth-users/internal/domain"
 )
 
 type UserRepository struct {
-	users map[int]domain.User
+	db *sql.DB
 }
 
-func NewUserRepository() domain.UserRepository {
-	return &UserRepository{users: make(map[int]domain.User)}
+func NewUserRepository(db *sql.DB) domain.UserRepository {
+	return &UserRepository{db: db}
 }
 
 func (r *UserRepository) Save(user domain.User) error {
-	if _, exists := r.users[user.ID]; exists {
-		return errors.New("user already exists")
+	_, err := r.db.Exec("INSERT INTO users (first_name, last_name, email) VALUES (?,?)", user.Firstname, user.Lastname, user.Email)
+	return err
+}
+
+func (r *UserRepository) FindByID(id int) (domain.User, error) {
+	var user domain.User
+	row := r.db.QueryRow("SELECT id, first_name, last_name, email FROM users WHERE id = ?", id)
+	if err := row.Scan(&user.ID, &user.Firstname, &user.Lastname, &user.Email); err != nil {
+		if err == sql.ErrNoRows {
+			return user, errors.New("user not found!")
+		}
+		return user, err
 	}
-	r.users[user.ID] = user
-	return nil
+	return user, nil
 }
 
 // other methods to implement domain.UserRepository

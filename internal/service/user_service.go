@@ -10,8 +10,8 @@ func NewUserService(repo domain.UserRepository) UserService {
 	return UserService{repo: repo}
 }
 
-func (s UserService) CreateUser(firstname, email string) error {
-	user := domain.User{Firstname: firstname, Email: email}
+func (s UserService) CreateUser(firstName, lastName, email string) error {
+	user := domain.User{Firstname: firstName, Lastname: lastName, Email: email}
 	return s.repo.Save(user)
 }
 

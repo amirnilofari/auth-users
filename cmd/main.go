@@ -2,11 +2,14 @@ package main
 
 import (
 	"database/sql"
+
 	"github.com/amirnilofari/auth-users/config"
 	"github.com/amirnilofari/auth-users/internal/cli"
 	"github.com/amirnilofari/auth-users/internal/repository"
 	"github.com/amirnilofari/auth-users/internal/service"
 	"github.com/gofiber/fiber/v2/log"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
@@ -22,7 +25,8 @@ func main() {
 	if _, err := db.Exec(`
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
+            first_name TEXT NOT NULL,
+			last_name TEXT NOT NULL,
             email TEXT NOT NULL UNIQUE
         );
     `); err != nil {

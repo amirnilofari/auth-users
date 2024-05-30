@@ -32,6 +32,8 @@ func StartCLI(userService service.UserService) {
 		} else {
 			fmt.Println("User created successfully!")
 		}
+	case selectedMainMenu == 2:
+		fmt.Println("ALl USERS")
 	}
 
 }

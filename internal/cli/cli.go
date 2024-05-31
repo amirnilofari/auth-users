@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/amirnilofari/auth-users/internal/service"
+	"github.com/jedib0t/go-pretty/table"
 )
 
 func StartCLI(userService service.UserService) {
@@ -33,7 +34,17 @@ func StartCLI(userService service.UserService) {
 			fmt.Println("User created successfully!")
 		}
 	case selectedMainMenu == 2:
-		fmt.Println("ALl USERS")
+		users, err := userService.GetAllUsers()
+		if err != nil {
+			fmt.Println("Error:", err)
+		} else {
+			t := table.NewWriter()
+			t.AppendHeader(table.Row{"#", "FirstName", "LastName", "Email"})
+			for _, user := range users {
+				t.AppendRow(table.Row{user.ID, user.Firstname, user.Lastname, user.Email})
+			}
+			fmt.Println(t.Render())
+		}
 	}
 
 }

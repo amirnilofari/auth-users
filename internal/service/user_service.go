@@ -15,4 +15,8 @@ func (s UserService) CreateUser(firstName, lastName, email string) error {
 	return s.repo.Save(user)
 }
 
+func (s UserService) GetAllUsers() ([]domain.User, error) {
+	return s.repo.FindAll()
+}
+
 // Other business logic methods

@@ -9,7 +9,7 @@ type User struct {
 
 type UserRepository interface {
 	Save(user User) error
-	FindByID(id int) (User, error)
+	FindByEmail(Email string) (User, error)
 	FindAll() ([]User, error)
 	//DeletByID(id int) error
 }

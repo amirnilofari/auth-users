@@ -12,6 +12,7 @@ func StartCLI(userService service.UserService) {
 	fmt.Println("User Managemet app")
 	fmt.Println("1.Add a user")
 	fmt.Println("2. See all users")
+	fmt.Println("3. Search user by email")
 
 	var selectedMainMenu int
 	fmt.Print("Choose number of options: ")
@@ -45,6 +46,18 @@ func StartCLI(userService service.UserService) {
 			}
 			fmt.Println(t.Render())
 		}
+	case selectedMainMenu == 3:
+		var email string
+		fmt.Print("Enter your desired user email: ")
+		fmt.Scanln(&email)
+		user, err := userService.GetUser(email)
+		if err != nil {
+			fmt.Println("Error:", err)
+		} else {
+			fmt.Println("FirstName: ", user.Firstname)
+			fmt.Println("LastName: ", user.Lastname)
+		}
+
 	}
 
 }

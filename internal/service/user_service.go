@@ -19,4 +19,8 @@ func (s UserService) GetAllUsers() ([]domain.User, error) {
 	return s.repo.FindAll()
 }
 
+func (s UserService) GetUser(email string) (domain.User, error) {
+	return s.repo.FindByEmail(email)
+}
+
 // Other business logic methods

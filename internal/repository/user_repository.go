@@ -39,9 +39,9 @@ func (r *UserRepository) FindAll() ([]domain.User, error) {
 
 }
 
-func (r *UserRepository) FindByID(id int) (domain.User, error) {
+func (r *UserRepository) FindByEmail(email string) (domain.User, error) {
 	var user domain.User
-	row := r.db.QueryRow("SELECT id, first_name, last_name, email FROM users WHERE id = ?", id)
+	row := r.db.QueryRow("SELECT * FROM users WHERE email = ?", email)
 	if err := row.Scan(&user.ID, &user.Firstname, &user.Lastname, &user.Email); err != nil {
 		if err == sql.ErrNoRows {
 			return user, errors.New("user not found!")

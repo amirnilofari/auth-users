@@ -51,4 +51,7 @@ func (r *UserRepository) FindByEmail(email string) (domain.User, error) {
 	return user, nil
 }
 
-// other methods to implement domain.UserRepository
+func (r *UserRepository) DeletByID(id int) error {
+	_, err := r.db.Exec("DELETE FROM users WHERE id = ?", id)
+	return err
+}

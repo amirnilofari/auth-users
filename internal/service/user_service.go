@@ -23,4 +23,6 @@ func (s UserService) GetUser(email string) (domain.User, error) {
 	return s.repo.FindByEmail(email)
 }
 
-// Other business logic methods
+func (s UserService) RemoveUser(id int) error {
+	return s.repo.DeletByID(id)
+}

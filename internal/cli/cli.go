@@ -13,6 +13,7 @@ func StartCLI(userService service.UserService) {
 	fmt.Println("1.Add a user")
 	fmt.Println("2. See all users")
 	fmt.Println("3. Search user by email")
+	fmt.Println("4. Delete user")
 
 	var selectedMainMenu int
 	fmt.Print("Choose number of options: ")
@@ -57,11 +58,16 @@ func StartCLI(userService service.UserService) {
 			fmt.Println("FirstName: ", user.Firstname)
 			fmt.Println("LastName: ", user.Lastname)
 		}
-
+	case selectedMainMenu == 4:
+		var id int
+		fmt.Print("Enter your desired user id: ")
+		fmt.Scanln(&id)
+		err := userService.RemoveUser(id)
+		if err != nil {
+			fmt.Println("Error:", err)
+		} else {
+			fmt.Println("The desired user was deleted!")
+		}
 	}
 
 }
-
-// func mainMenu(userService service.UserService) {
-
-// }
